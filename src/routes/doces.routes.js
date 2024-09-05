@@ -82,5 +82,5 @@ docesRoutes.put("/:id", (req, res) => {
         guloseima,
     }
 )
-})
+});
 
