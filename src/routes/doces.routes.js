@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const docesRoutes = Router();
 
-const guloseimas = [
+let guloseimas = [
   {
     id: 1,
     nome: "Trufa",
@@ -58,7 +58,6 @@ docesRoutes.get("/:id", (req, res) => {
     return res.status(200).send(guloseima);
 });
 
-export default docesRoutes;
 
 // Rota para editar uma guloseima
 docesRoutes.put("/:id", (req, res) => { 
@@ -84,3 +83,23 @@ docesRoutes.put("/:id", (req, res) => {
 )
 });
 
+// Rota para deletar uma guloseima
+docesRoutes.delete("/:id", (req, res) => { 
+    const { id } = req.params
+
+    const guloseima = guloseimas.find((doce) => doce.id === Number(id));
+
+
+    if (!guloseima) {
+        return res.status(404).send({ message: "Guloseima não encontrada!"});
+    }
+    
+    
+    guloseimas = guloseimas.filter((doce) => doce.id !== Number(id));
+    return res.status(200).send({
+        message: "Guloseima deletada!",
+        guloseima
+    })
+});
+
+export default docesRoutes;
